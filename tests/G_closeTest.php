@@ -15,11 +15,11 @@ require_once 'TestMain.php';
  */
 class G_closeTest extends TestMain {
         
-    public function testFinishInevstment() {
+    public function testFinishInvestment() {
         $this->api->investments->finishByInvestment(E_InvestmentsTest::$investment);
     }
     
-    public function testCLoseFundraising() {
+    public function testCloseFundraising() {
         
         $this->api->fundraisings->closeByExternalFundraisingId(D_FundraisingsTest::$fundraisingHaveIid->iid);
     }

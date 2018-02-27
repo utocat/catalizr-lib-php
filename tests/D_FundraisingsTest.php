@@ -19,6 +19,8 @@ class D_FundraisingsTest extends TestMain {
      * @var \Catalizr\Entity\Fundraisings
      */
     static $fundraisingHaveIid;
+
+
     /**
      *
      * @var array()
@@ -26,6 +28,7 @@ class D_FundraisingsTest extends TestMain {
     static $fundraisings;
     
     public function testCreateErrorApi() {
+        date_default_timezone_set('Europe/Paris');
         $fundraisingData = array(
             'name'=> 'myFundraising',
             'part_amount' => 100,

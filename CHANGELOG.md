@@ -1,3 +1,8 @@
+## 1.0.0 (2018-02-27)
+### Fixed (2 changes)
+* fix CI
+* fix timezone for tests
+
 ## 0.0.2 (2018-02-27)
 ### Added (1 change)
 * Add new tests
@@ -7,6 +12,7 @@
 
 ## 0.0.1 (2018-02-24)
 * First commit
+
 
 
 
