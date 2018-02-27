@@ -42,7 +42,7 @@ class Investors extends \Catalizr\Lib\Api{
      * @return \Catalizr\Entity\Investors Investor get
      */
     public function getByExternalId($iid) {
-        return parent::getByExternalId(self::$prefixTag, $iid);
+        return parent::getByExternalId($iid);
     }
     
     /**

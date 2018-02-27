@@ -25,16 +25,21 @@ class Investments extends \Catalizr\Lib\Api{
      * @return \Catalizr\Entity\Investments Investment get
      */
     public function getById($id) {
-        return parent::getById( self::$prefixTag, self::$classEntity, $id);
+        $investment = parent::getById( self::$prefixTag, self::$classEntity, $id);
+        $investment->fundraising_id = $investment->fundraising;
+        $investment->investor_id = $investment->investor;
+        $investment->fundraising = null;
+        $investment->investor = null;
+        return $investment;
     }
-    
-   /**
-    * 
-    * @return string[]
-    */
-    public function getAllid() {
-        return parent::getAll(self::$prefixTag, self::$classEntity);
-    }
+//    
+//   /**
+//    * 
+//    * @return string[]
+//    */
+//    public function getAllid() {
+//        return parent::getAll(self::$prefixTag, self::$classEntity);
+//    }
     
     /**
      * 
@@ -42,7 +47,7 @@ class Investments extends \Catalizr\Lib\Api{
      * @return \Catalizr\Entity\Investments Investment get
      */
     public function getByExternalId($iid) {
-        return parent::getByExternalId(self::$prefixTag, $iid);
+        return parent::getByExternalId($iid);
     }
     /**
      * 
@@ -68,7 +73,7 @@ class Investments extends \Catalizr\Lib\Api{
                 $investment->fundraising_id = $investment->fundraising->id;
             }else if(isset($investment->fundraising_external_id))
             {
-                $investment->fundraising_id = $this->api->fundraising->getIdByExternalIid($investment->fundraising_external_id);
+                $investment->fundraising_id = $this->api->fundraisings->getIdByExternalIid($investment->fundraising_external_id);
             }else{
                 throw new \Exception('fundraising or fundraising_id or fundraising_external_id is not set in investment');
             }
@@ -81,7 +86,7 @@ class Investments extends \Catalizr\Lib\Api{
                 $investment->investor_id = $investment->investor->id;
             }else if(isset($investment->investor_external_id))
             {
-                $investment->investor_id = $this->api->investments->getIdByExternalIid($investment->investor_external_id);
+                $investment->investor_id = $this->api->investors->getIdByExternalIid($investment->investor_external_id);
             }else{
                 throw new \Exception('investor or investor_id or investor_external_id is not set in investment');
             }
@@ -112,10 +117,36 @@ class Investments extends \Catalizr\Lib\Api{
      * @param \Catalizr\Entity\Documents $document
      */
     public function createDocumentByExternalInvestmentId($iid ,\Catalizr\Entity\Documents &$document){
-        $id=$this->getIdByExternalIid(self::$prefixTag, $iid);
+        $id=$this->getIdByExternalIid( $iid);
         
         $this->createDocumentById(self::$prefixTag,$id,$document);
     }
     
+        /**
+     * 
+     * @param string $id id of catalizr
+     * @return void
+     */
+    public function finishByIdInvestment($id) {
+        return $this->api->helperRequest->executeReq(self::$prefixTag.'_finish', null,[$id]);
+    }
+    /**
+     * 
+     * @param \Catalizr\Entity\Investments
+     * @return void
+     */
+    public function finishByInvestment($investment) {
+        return $this->finishByIdInvestment($investment->id);
+    }
+    /**
+     * 
+     * @param string|int|double $iid external id
+     * @return void
+     */
+    public function finishByExternalInvestmentId($iid) {
+        $id = $this->getIdByExternalIid($iid);
+        return $this->finishByIdInvestment($id);
+
+    }
     
 }

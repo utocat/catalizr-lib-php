@@ -33,7 +33,7 @@ class Fundraisings extends \Catalizr\Lib\Api{
      * @return \Catalizr\Entity\Fundraisings Fundraisings get
      */
     public function getByExternalId($iid) {
-        return parent::getByExternalId(self::$prefixTag, $iid);
+        return parent::getByExternalId($iid);
     }
     
     /**
@@ -69,7 +69,7 @@ class Fundraisings extends \Catalizr\Lib\Api{
      * @return void
      */
     public function closeByExternalFundraisingId($iid) {
-        $id = $this->getByExternalId( $iid);
+        $id = $this->getIdByExternalIid($iid);
         return $this->closeByIdFundraising($id);
 
     }

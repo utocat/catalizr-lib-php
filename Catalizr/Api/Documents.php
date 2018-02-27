@@ -37,7 +37,6 @@ class Documents extends \Catalizr\Lib\Api{
                 }
                 if($headerExplode[0] === 'Content-Disposition'){
                    $fileName = explode( '"',$headerExplode[1])[1];
-                   var_dump($fileName);
                    $fileSet= true;
                    curl_setopt($curl, CURLOPT_FILE, fopen($path.$fileName,"w+"));
                    $fileNameReturn =$path.$fileName;

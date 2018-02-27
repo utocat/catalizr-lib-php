@@ -28,7 +28,7 @@ class Api extends Object{
         * @param string|int|double $iid external iid
         * @return \Catalizr\Lib\Entity
         */
-   protected function getByExternalId($prefixTag,$iid) {
+   protected function getByExternalId($iid) {
         return $this->getById($this->getIdByExternalIid($iid));
     }
     
@@ -77,7 +77,7 @@ class Api extends Object{
      protected function createDocumentById($prefixTag,$id, \Catalizr\Entity\Documents &$document){
         if(!is_readable($document->path_to_file) || !is_file($document->path_to_file ))
         {
-            throw new Exception('document file not exists');
+            throw new \Exception('document file not exists');
         }
             
         if(filesize($document->path_to_file) < 2000000){

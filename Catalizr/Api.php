@@ -36,7 +36,7 @@ class Api {
      *
      * @var \Catalizr\Api\Fundraisings
      */
-    public $fundraising;
+    public $fundraisings;
         
     /**
      *
@@ -64,7 +64,7 @@ class Api {
         $this->banks     = new Api\Banks($this);
         $this->investors = new Api\Investors($this);
         $this->companies = new Api\Companies($this);
-        $this->fundraising = new Api\Fundraisings($this);
+        $this->fundraisings = new Api\Fundraisings($this);
         $this->investments = new Api\Investments($this);
         $this->documents = new Api\Documents($this);
         

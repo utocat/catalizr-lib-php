@@ -46,7 +46,7 @@ class Companies extends \Catalizr\Lib\Api{
      * @return \Catalizr\Entity\Companies Company get
      */
     public function getByExternalId($iid) {
-        return parent::getByExternalId(self::$prefixTag, $iid);
+        return parent::getByExternalId($iid);
     }
     /**
      * 
@@ -68,6 +68,7 @@ class Companies extends \Catalizr\Lib\Api{
         }
         
         $object = $this->api->helperRequest->executeReq(self::$prefixTag.'_postFundraisings', $fundraising,[$id]);
+
         if(isset($object->iid)){
             $fundraising->iid = $object->iid;        
         }
@@ -80,7 +81,7 @@ class Companies extends \Catalizr\Lib\Api{
      * @param \Catalizr\Entity\Fundraisings $fundraising
      */
     public function createFundraisingsByCompany(\Catalizr\Entity\Companies $Company ,\Catalizr\Entity\Fundraisings &$fundraising){
-        $this->createFundraisingsById($Company->id,$fundraising);
+        $this->createFundraisingsByCompanyId($Company->id,$fundraising);
     }
     /**
      * 
@@ -90,7 +91,7 @@ class Companies extends \Catalizr\Lib\Api{
     public function createFundraisingsByExternalCompanyId($iid ,\Catalizr\Entity\Fundraisings &$fundraising){
         $id=$this->getIdByExternalIid($iid);
         
-        $this->createFundraisingsById($id,$fundraising);
+        $this->createFundraisingsByCompanyId($id,$fundraising);
         
     }
 
@@ -118,7 +119,7 @@ class Companies extends \Catalizr\Lib\Api{
      * @param \Catalizr\Entity\Documents $document
      */
     public function createDocumentByExternalCompanyId($iid ,\Catalizr\Entity\Documents &$document){
-        $id=$this->getIdByExternalIid(self::$prefixTag, $iid);
+        $id=$this->getIdByExternalIid($iid);
         
         $this->createDocumentById(self::$prefixTag,$id,$document);
     }
@@ -150,7 +151,6 @@ class Companies extends \Catalizr\Lib\Api{
      */             
     public function getFundraisingsIdByExternalCompanyId($iid){
         $id = $this->getIdByExternalIid($iid);
-        var_dump($id);
         return $this->getFundraisingsIdByCompanyId($id);
         
     }

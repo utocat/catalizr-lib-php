@@ -33,10 +33,10 @@ class HelperRequest extends Object{
     'fundraisings_close' =>array( 'url' => '/fundraisings/%s/close', 'methode' => RequestType::POST, 'expectedCode' => array(200)),
     'fundraisings_postDocuments' =>array( 'url' => '/fundraisings/%s/documents', 'methode' => RequestType::POST, 'expectedCode' => array(201)),
     'investments_get' =>array( 'url' => '/investments/%s', 'methode' => RequestType::GET, 'expectedCode' => array(200)),
-    'investments_getAll' =>array( 'url' => '/investments', 'methode' => RequestType::GET, 'expectedCode' => array(200)),
+//    'investments_getAll' =>array( 'url' => '/investments', 'methode' => RequestType::GET, 'expectedCode' => array(200)),
     'investments_getiid' =>array( 'url' => '/investments/iid/%s', 'methode' => RequestType::GET, 'expectedCode' => array(200)),
     'investments_post' =>array( 'url' => '/investments', 'methode' => RequestType::POST, 'expectedCode' => array(201)),
-    'investments_finish' =>array( 'url' => '/investments/%s/finish', 'methode' => RequestType::POST, 'expectedCode' => array(201)),
+    'investments_finish' =>array( 'url' => '/investments/%s/finish', 'methode' => RequestType::POST, 'expectedCode' => array(200)),
     'investments_postDocuments' =>array( 'url' => '/investments/%s/documents', 'methode' => RequestType::POST,'expectedCode' => array(201)),
     'documents_get' =>array( 'url' => '/documents/%s', 'methode' => RequestType::GET, 'expectedCode' => array(200))
     );

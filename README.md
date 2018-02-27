@@ -45,7 +45,7 @@ If you're not using PSR-4 or Composer, the installation is as easy as downloadin
 
 License
 -------------------------------------------------
-Catalizr Library is distributed under MIT license, see the [LICENSE file](https://github.com/utocat/lib-catalizr-php/blob/master/LICENSE).
+Catalizr Library is distributed under MIT license, see the [LICENSE file](./LICENSE).
 
 
 Unit Tests
@@ -195,3 +195,7 @@ class CatalizrService
     }
 }
 ```
+
+Follow the changelog
+--------------------
+You can follow all changes with our [changelog file](./CHANGELOG.md)
