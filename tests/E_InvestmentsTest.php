@@ -67,7 +67,7 @@ class E_InvestmentsTest extends TestMain {
         $investment1->fundraising_external_id = D_FundraisingsTest::$fundraisingHaveIid->iid;
         $investment1->investor = B_InvestorTest::$investor;
         $investment1->payment_mode = 'PEA';
-        $investment1->nb_part = 2;
+        $investment1->nb_part = 10;
         $investment1->bank_name ='MySuperBanck';
         
         $return = $this->api->investments->create($investment1);
@@ -82,7 +82,7 @@ class E_InvestmentsTest extends TestMain {
         $investment2->fundraising_id = D_FundraisingsTest::$fundraisings[0]->id;
         $investment2->investor_external_id = B_InvestorTest::$investor->iid;
         $investment2->payment_mode = 'PEA';
-        $investment2->nb_part = 2;
+        $investment2->nb_part = 10;
         $investment2->bank_name ='MySuperBanck';
         
         $this->api->investments->create($investment2);
@@ -91,7 +91,7 @@ class E_InvestmentsTest extends TestMain {
         $investment3->fundraising = D_FundraisingsTest::$fundraisings[1];
         $investment3->investor_id = B_InvestorTest::$investor->id;
         $investment3->payment_mode = 'PEA';
-        $investment3->nb_part = 2;
+        $investment3->nb_part = 10;
         $investment3->bank_name ='MySuperBanck';
         
         $this->api->investments->create($investment3);
@@ -102,7 +102,7 @@ class E_InvestmentsTest extends TestMain {
         $investment->fundraising = D_FundraisingsTest::$fundraisings[2];
         $investment->investor = B_InvestorTest::$investor;
         $investment->payment_mode = 'PEA';
-        $investment->nb_part = 2;
+        $investment->nb_part = 10;
         $investment->bank_name ='MySuperBanck';
         $investment->bic_swift ='AGRIFRPP867';
         $investment->bank_address ='MyBankAddr';
@@ -147,7 +147,7 @@ class E_InvestmentsTest extends TestMain {
         $this->assertSame(self::$investment->fundraising_id, D_FundraisingsTest::$fundraisings[2]->id);
         $this->assertSame(self::$investment->investor_id, B_InvestorTest::$investor->id);
         $this->assertSame(self::$investment->payment_mode, 'PEA');
-        $this->assertSame(self::$investment->nb_part, 2);
+        $this->assertSame(self::$investment->nb_part, 10);
         $this->assertSame(self::$investment->bank_name, 'MySuperBanck');
         $this->assertSame(self::$investment->bic_swift, 'AGRIFRPP867');
         $this->assertSame(self::$investment->iban, 'FR1420041010050500013M02606');

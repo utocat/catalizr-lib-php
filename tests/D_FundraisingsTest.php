@@ -91,13 +91,17 @@ class D_FundraisingsTest extends TestMain {
             'part_amount' => 100.5,
             'minimum_investment'=> 1000,
             'fee' => 1,
+            'description'=> 'test lib php',
+            'amount_total' => 10000,
             'start_date' => date('c',time() +50000),
             'end_date' => date('c',time() +70000),
-            'amount_total' => 10000,
-            'description'=> 'test lib php',
             'bic_swift'=> 'AGRIFRPP867',
             'iban'=> 'FR1420041010050500013M02606',
             'funds_type' =>'CREATE',
+            'part_nature' => 'PARTS_SOCIALES',
+            'bank_name' => 'test',
+            'bank_address' => 'test',
+            'part_type' => 'ACTION_INVEST',
             'iid'=> time()
         );
         $fundraising = new \Catalizr\Entity\Fundraisings($fundraisingData);
@@ -144,6 +148,10 @@ class D_FundraisingsTest extends TestMain {
         $this->assertSame(self::$fundraisingHaveIid->bic_swift, 'AGRIFRPP867');
         $this->assertSame(self::$fundraisingHaveIid->iban, 'FR1420041010050500013M02606');
         $this->assertSame(self::$fundraisingHaveIid->funds_type, 'CREATE');
+        $this->assertSame(self::$fundraisingHaveIid->part_nature, 'PARTS_SOCIALES');
+        $this->assertSame(self::$fundraisingHaveIid->bank_name, 'test');
+        $this->assertSame(self::$fundraisingHaveIid->bank_address, 'test');
+        $this->assertSame(self::$fundraisingHaveIid->part_type, 'ACTION_INVEST');
 
         $this->assertInternalType('string',self::$fundraisingHaveIid->start_date);
         $this->assertInternalType('string',self::$fundraisingHaveIid->end_date);
