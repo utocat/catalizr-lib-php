@@ -67,7 +67,6 @@ class Api {
         $this->fundraisings = new Api\Fundraisings($this);
         $this->investments = new Api\Investments($this);
         $this->documents = new Api\Documents($this);
-        
     }
     
 }

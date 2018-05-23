@@ -16,7 +16,7 @@ class Banks extends \Catalizr\Lib\Api{
      * @return \Catalizr\Entity\Banks[]
      */
     public function getAll() {
-       $objects= parent::getAll(self::$prefixTag, self::$classEntity);
+       $objects = parent::getAll(self::$prefixTag);
        $className = self::$classEntity;
         return $className::hydrateAll($objects);
     }

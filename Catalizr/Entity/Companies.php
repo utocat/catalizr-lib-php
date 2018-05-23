@@ -69,7 +69,7 @@ class Companies extends \Catalizr\Lib\Entity{
      *
      * @var string
      */
-    public $siret;    
+    public $siren;    
         
     /**
      *
@@ -80,6 +80,53 @@ class Companies extends \Catalizr\Lib\Entity{
      *
      * @var bool
      */
-    public $in_progress;    
+    public $in_progress;  
+    /**
+     *
+     * @var string
+     */
+    public $boss_title;
+    /**
+     *
+     * @var string
+     */
+    public $boss_name;
+    /**
+     *
+     * @var string
+     */
+    public $boss_surname;
+    /**
+     *
+     * @var string
+     */
+    public $boss_phone;
+    /**
+     *
+     * @var string
+     */
+    public $boss_status;
+    /**
+     *
+     * @var string
+     */
+    public $iban;
+    /**
+     *
+     * @var string
+     */
+    public $bic_swift;
+    /**
+     *
+     * @var string
+     */
+    public $bank_name;
+    /**
+     *
+     * @var string
+     */
+    public $bank_address;
+    
+    public $fundraising_default;
     
 }

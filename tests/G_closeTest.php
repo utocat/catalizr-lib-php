@@ -20,7 +20,22 @@ class G_closeTest extends TestMain {
     }
     
     public function testCloseFundraising() {
-        
         $this->api->fundraisings->closeByExternalFundraisingId(D_FundraisingsTest::$fundraisingHaveIid->iid);
+    }
+    public function createFundraisingAfertClose() {
+                    
+        date_default_timezone_set('Europe/Paris');
+        $fundraisingData = array(
+            'name'=> 'myFundraising',
+            'part_amount' => 100,
+            'minimum_investment'=> 1000,
+            'fee' => 1,
+            'start_date' => date('c',time() +50000),
+            'end_date' => date('c',time() +70000),
+            'amount_total' => 10000,
+            'description'=> 'test lib php',
+        );
+        $fundraising = new \Catalizr\Entity\Fundraisings($fundraisingData);
+        $this->api->companies->createFundraisingsByCompanyId(D_FundraisingsTest::$fundraisingHaveIid->company, $fundraising);
     }
 }

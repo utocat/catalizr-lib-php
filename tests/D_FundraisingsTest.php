@@ -26,7 +26,53 @@ class D_FundraisingsTest extends TestMain {
      * @var array()
      */
     static $fundraisings;
+
+    public function testCreate() {
+        $fundraisingData = array(
+            'name'=> 'myFundraising',
+            'part_amount' => 100,
+            'minimum_investment'=> 1000,
+            'fee' => 1,
+            'start_date' => date('c',time() + 50000),
+            'end_date' => date('c',time() + 70000),
+            'amount_total' => 10000,
+            'description'=> 'test lib php',
+        );
+        
+        self::$fundraisings[] = new \Catalizr\Entity\Fundraisings($fundraisingData);
+        self::$fundraisings[] = new \Catalizr\Entity\Fundraisings($fundraisingData);
+        self::$fundraisings[] = new \Catalizr\Entity\Fundraisings($fundraisingData);
+        $this->api->companies->createFundraisingsByCompany(C_CompaniesTest::$companies[0], self::$fundraisings[0]);
+
+        $this->api->companies->createFundraisingsByExternalCompanyId(C_CompaniesTest::$companies[1]->iid, self::$fundraisings[1]);
+        $this->api->companies->createFundraisingsByCompanyId(C_CompaniesTest::$companies[2]->id, self::$fundraisings[2]);
+    }
     
+    public function testCreateFull() {
+        $fundraisingData = array(
+            'name'=> 'myFundraising',
+            'part_amount' => 100.5,
+            'minimum_investment'=> 1000,
+            'fee' => 1,
+            'description'=> 'test lib php',
+            'amount_total' => 10000,
+            'start_date' => date('c',time() + 50000),
+            'end_date' => date('c',time() + 70000),
+            'funds_type' =>'CREATE',
+            'part_nature' => 'PARTS_SOCIALES',
+            'part_type' => 'ACTION_INVEST',
+            'iid'=> time()
+        );
+        $fundraising = new \Catalizr\Entity\Fundraisings($fundraisingData);
+
+        $this->api->companies->createFundraisingsByCompanyId(C_CompaniesTest::$companies[3]->id, $fundraising);
+        return $fundraising;
+    }
+    
+    /**
+     * 
+     * @depends testCreateFull
+     */ 
     public function testCreateErrorApi() {
         date_default_timezone_set('Europe/Paris');
         $fundraisingData = array(
@@ -38,11 +84,16 @@ class D_FundraisingsTest extends TestMain {
             'end_date' => date('c',time() +70000),
             'amount_total' => 10000,
             'description'=> 'test lib php',
-            'bic_swift'=> 'AGRIFRPP867',
-            'iban'=> 'FR1420041010050500013M02606'
         );
-                
         $fundraising1 = new \Catalizr\Entity\Fundraisings($fundraisingData);
+
+        try{
+            $this->api->companies->createFundraisingsByCompany(C_CompaniesTest::$companies[0], $fundraising1);
+        } catch (Exception $ex) {
+            $this->assertSame(400, $ex->getCode(),'http code');
+            $this->assertSame('A fundraising is already open for this company', $ex->getMessage());
+        }
+
         try{
             
             $this->api->companies->createFundraisingsByCompanyId('edfedfedfedfedfedfedfedf', $fundraising1);
@@ -54,62 +105,14 @@ class D_FundraisingsTest extends TestMain {
         $fundraising2 = new \Catalizr\Entity\Fundraisings();
 
         try{ 
-            $this->api->companies->createFundraisingsByCompany(C_CompaniesTest::$companie, $fundraising2);
+            $this->api->companies->createFundraisingsByCompany(C_CompaniesTest::$companies[0], $fundraising2);
 
         } catch (\Catalizr\Lib\HttpException $ex) {
           $this->assertSame(400, $ex->getCode(),'http code');
           $this->assertSame('"name" is required', $ex->getMessage());
         }
     }
-    
-    public function testCreate() {
-        $fundraisingData = array(
-            'name'=> 'myFundraising',
-            'part_amount' => 100,
-            'minimum_investment'=> 1000,
-            'fee' => 1,
-            'start_date' => date('c',time() +50000),
-            'end_date' => date('c',time() +70000),
-            'amount_total' => 10000,
-            'description'=> 'test lib php',
-            'bic_swift'=> 'AGRIFRPP867',
-            'iban'=> 'FR1420041010050500013M02606'
-        );
-        
-        self::$fundraisings[] = new \Catalizr\Entity\Fundraisings($fundraisingData);
-        self::$fundraisings[] = new \Catalizr\Entity\Fundraisings($fundraisingData);
-        self::$fundraisings[] = new \Catalizr\Entity\Fundraisings($fundraisingData);
-        $this->api->companies->createFundraisingsByCompany(C_CompaniesTest::$companie, self::$fundraisings[0]);
-
-        $this->api->companies->createFundraisingsByExternalCompanyId(C_CompaniesTest::$companie->iid, self::$fundraisings[1]);
-        $this->api->companies->createFundraisingsByCompanyId(C_CompaniesTest::$companie->id, self::$fundraisings[2]);
-    }
-    
-    public function testCreateFull() {
-        $fundraisingData = array(
-            'name'=> 'myFundraising',
-            'part_amount' => 100.5,
-            'minimum_investment'=> 1000,
-            'fee' => 1,
-            'description'=> 'test lib php',
-            'amount_total' => 10000,
-            'start_date' => date('c',time() +50000),
-            'end_date' => date('c',time() +70000),
-            'bic_swift'=> 'AGRIFRPP867',
-            'iban'=> 'FR1420041010050500013M02606',
-            'funds_type' =>'CREATE',
-            'part_nature' => 'PARTS_SOCIALES',
-            'bank_name' => 'test',
-            'bank_address' => 'test',
-            'part_type' => 'ACTION_INVEST',
-            'iid'=> time()
-        );
-        $fundraising = new \Catalizr\Entity\Fundraisings($fundraisingData);
-
-        $this->api->companies->createFundraisingsByExternalCompanyId(C_CompaniesTest::$companie->iid, $fundraising);
-        return $fundraising;
-    }
-    
+  
     public function testGetError() {
         try {
             $this->api->fundraisings->getById('rrrrrrrrrrrrrrrrrrrrrrrr');
@@ -145,12 +148,8 @@ class D_FundraisingsTest extends TestMain {
         $this->assertSame(self::$fundraisingHaveIid->fee, 1);
         $this->assertSame(self::$fundraisingHaveIid->amount_total, 10000);
         $this->assertSame(self::$fundraisingHaveIid->description, 'test lib php');
-        $this->assertSame(self::$fundraisingHaveIid->bic_swift, 'AGRIFRPP867');
-        $this->assertSame(self::$fundraisingHaveIid->iban, 'FR1420041010050500013M02606');
         $this->assertSame(self::$fundraisingHaveIid->funds_type, 'CREATE');
         $this->assertSame(self::$fundraisingHaveIid->part_nature, 'PARTS_SOCIALES');
-        $this->assertSame(self::$fundraisingHaveIid->bank_name, 'test');
-        $this->assertSame(self::$fundraisingHaveIid->bank_address, 'test');
         $this->assertSame(self::$fundraisingHaveIid->part_type, 'ACTION_INVEST');
 
         $this->assertInternalType('string',self::$fundraisingHaveIid->start_date);
@@ -166,11 +165,12 @@ class D_FundraisingsTest extends TestMain {
         $ids1 = $this->api->companies->getFundraisingsIdByCompanyId(C_CompaniesTest::$companie->id);
         $ids2 = $this->api->companies->getFundraisingsIdByCompnay(C_CompaniesTest::$companie);
         $ids3 = $this->api->companies->getFundraisingsIdByExternalCompanyId(C_CompaniesTest::$companie->iid);
+        
 
         $this->assertEquals($ids1,$ids2);
         $this->assertEquals($ids2,$ids3);
 
-        $this->assertContainsOnly('string', $ids1);
+        $this->assertContainsOnly('string', $ids1->items);
 
         // get id by iid
 

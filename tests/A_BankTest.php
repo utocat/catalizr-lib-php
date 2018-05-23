@@ -17,7 +17,6 @@ class A_BankTest extends TestMain {
     
     public function testGetAll() {
         $bancks = $this->api->banks->getAll();
-      //  var_dump($bancks)
         $this->assertContainsOnlyInstancesOf('\Catalizr\Entity\Banks', $bancks);
         foreach ($bancks as $banck) {
             $this->assertNotEmpty($banck->name);

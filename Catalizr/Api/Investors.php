@@ -30,12 +30,12 @@ class Investors extends \Catalizr\Lib\Api{
     
    /**
     * 
-    * @return string[]
+    * @return object[]
     */
-    public function getAllid() {
-        return parent::getAll(self::$prefixTag, self::$classEntity);
+    public function getAllId(\Catalizr\Pagination $page=null) {
+        return parent::getAll(self::$prefixTag, $page);
     }
-    
+
     /**
      * 
      * @param string|int|double $iid external id

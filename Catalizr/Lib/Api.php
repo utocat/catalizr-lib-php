@@ -8,26 +8,26 @@ namespace Catalizr\Lib;
  * @author codati
  */
 class Api extends Object{
-/**
- * 
- * @param string $prefixTag
- * @param string $classEntity
- * @param string $id id of catalizr
- * @return \Catalizr\Lib\Entity
- */
-   protected function getById($prefixTag,$classEntity,$id) {
+   /**
+    * 
+    * @param string $prefixTag
+    * @param string $classEntity
+    * @param string $id id of catalizr
+    * @return \Catalizr\Lib\Entity
+    */
+    protected function getById($prefixTag,$classEntity,$id) {
         $object = $this->api->helperRequest->executeReq($prefixTag.'_get',null,[$id]);
         
         return new $classEntity($object);
     }
     
-    /**
-        * 
-        * @param string $prefixTag
-        * @param string $classEntity
-        * @param string|int|double $iid external iid
-        * @return \Catalizr\Lib\Entity
-        */
+   /**
+    * 
+    * @param string $prefixTag
+    * @param string $classEntity
+    * @param string|int|double $iid external iid
+    * @return \Catalizr\Lib\Entity
+    */
    protected function getByExternalId($iid) {
         return $this->getById($this->getIdByExternalIid($iid));
     }
@@ -65,11 +65,11 @@ class Api extends Object{
      * @param string $prefixTag
      * @return array()
      */
-    protected function getAll($prefixTag) {
-        return $this->api->helperRequest->executeReq($prefixTag.'_getAll');
+    protected function getAll($prefixTag, $page=null) {
+        return $this->api->helperRequest->executeReq($prefixTag.'_getAll', null, null, $page);
     }
     
-        /**
+    /**
      * 
      * @param string $id
      * @param \Catalizr\Entity\Documents $document

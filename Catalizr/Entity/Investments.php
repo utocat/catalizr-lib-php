@@ -28,7 +28,7 @@ class Investments extends \Catalizr\Lib\Entity {
      * @var string
      */
     public $fundraising_id;
-    
+
     /**
      *
      * @var string|int|double
@@ -50,8 +50,18 @@ class Investments extends \Catalizr\Lib\Entity {
      * @var \Catalizr\Entity\Fundraisings
      */
     public $fundraising;
+
+    /**
+     *
+     * @var \Catalizr\Entity\Companies
+     */
+    public $company;
     
-    
+    /**
+     *
+     * @var array()
+     */
+    public $shares;
     /**
      *
      * @var string
@@ -81,10 +91,13 @@ class Investments extends \Catalizr\Lib\Entity {
      *
      * @var string
      */
-    
     public $bank_address;
 
-    
+    /**
+     *
+     * @var number
+     */
+    public $date_subscribe;
     /**
      *
      * @var string

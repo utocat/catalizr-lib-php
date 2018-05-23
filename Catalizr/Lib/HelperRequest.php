@@ -60,8 +60,8 @@ class HelperRequest extends Object{
         {
             mkdir($this->api->config->folderCache, 0700, true);
         }
-        $responce = $this->executeReq('authentification',array('apiPublicKey' => $this->api->config->publicKey ) );
-        $this->jwt = $responce->authorizationToken;
+        $response = $this->executeReq('authentification',array('apiPublicKey' => $this->api->config->publicKey ) );
+        $this->jwt = $response->authorizationToken;
         file_put_contents($pathJWT,$this->jwt);
 
         return $this->jwt;
@@ -76,6 +76,11 @@ class HelperRequest extends Object{
         }else{
             $url = $this->api->config->url . $this->listTag[$tag]['url'];
 
+        }
+
+        if($params)
+        {
+            $url .= "?".http_build_query($params);
         }
         $header = array();
         
@@ -109,27 +114,17 @@ class HelperRequest extends Object{
         curl_setopt($curl, CURLOPT_HTTPHEADER,$header);
    
         curl_setopt_array($curl,$optionCurl);
-        $responce = curl_exec($curl) ;
+        $response = curl_exec($curl) ;
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-//        var_dump($responce);
-//        var_dump($url);
-        
-//        // to delete when the API will fix <-- 
-//        $responceDecode = json_decode($responce);
-//        if($responceDecode->message === 'invalid token'){
-//            $httpcode=401;
-//        }
-//        //-->
         
         if(in_array($httpcode, $this->listTag[$tag]['expectedCode'])){
-            $responceDecode = json_decode($responce);
-            if($responceDecode)
+            $responseDecode = json_decode($response);
+            if($responseDecode)
             {
-                return $responceDecode;
+                return $responseDecode;
 
             }else{
-                return $responce;
+                return $response;
             }
         }else{
             
@@ -138,7 +133,7 @@ class HelperRequest extends Object{
                 $this->getJwt(true);
                 $this->executeReq($tag, $data, $dataUrl, $params, $optionCurl, false);
             } else {
-                throw new HttpException($responce,$httpcode);
+                throw new HttpException($response,$httpcode);
          
             }
         }
@@ -172,27 +167,17 @@ class HelperRequest extends Object{
         curl_setopt($curl, CURLOPT_HTTPHEADER,$header);
         curl_setopt($curl, CURLOPT_TIMEOUT, 10000);
 
-        $responce = curl_exec($curl) ;
+        $response = curl_exec($curl) ;
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-//        var_dump($responce);
-        
-        // to delete when the API will fix <-- 
-        $responceDecode = json_decode($responce);
-
-        if($responceDecode->message === 'invalid token'){
-            $httpcode=401;
-        }
-        //-->
         
         if($httpcode=== 201){
-            $responceDecode = json_decode($responce);
-            if($responceDecode)
+            $responseDecode = json_decode($response);
+            if($responseDecode)
             {
-                return $responceDecode;
+                return $responseDecode;
 
             }else{
-                return $responce;
+                return $response;
             }
         }else{
             
@@ -201,7 +186,7 @@ class HelperRequest extends Object{
                 $this->getJwt(true);
                 $this->executeUpload($file, $url, $type_mime,false);
             } else {
-                throw new HttpException($responce,$httpcode);
+                throw new HttpException($response,$httpcode);
          
             }
         }

@@ -46,7 +46,7 @@ class B_InvestorTest extends TestMain{
         $investor->city = 'Lille';
         $investor->country= 'France';
         $investor->title= 'Lib';
-        $investor->email= 'suport@utocat.com';
+        $investor->email= 'support+'.time().'@catalizr.eu';
         $investor->iid= time();
         $this->api->investors->create($investor);
         
@@ -115,7 +115,7 @@ class B_InvestorTest extends TestMain{
         $this->assertSame(self::$investor->city, 'Lille');
         $this->assertSame(self::$investor->country, 'France');
         $this->assertSame(self::$investor->title, 'Lib');
-        $this->assertSame(self::$investor->email, 'suport@utocat.com');
+        $this->assertSame(self::$investor->email, $investor->email);
         
         $this->assertInternalType('string',self::$investor->createdAt);
         $this->assertInternalType('string',self::$investor->updatedAt);
@@ -126,7 +126,7 @@ class B_InvestorTest extends TestMain{
         // get all ids
         $ids = $this->api->investors->getAllid();
 
-        $this->assertContainsOnly('string', $ids);
+        $this->assertContainsOnly('string', $ids->items);
 
         // get id by iid
 

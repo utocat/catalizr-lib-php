@@ -19,7 +19,6 @@ class Fundraisings extends \Catalizr\Lib\Entity {
      * @var int
      */
     public $createdAt;
-    
     /**
      *
      * @var string
@@ -65,8 +64,6 @@ class Fundraisings extends \Catalizr\Lib\Entity {
      * @var string
      */
     public $funds_type;
-    
-    
     /**
      *
      * @var string
@@ -76,52 +73,20 @@ class Fundraisings extends \Catalizr\Lib\Entity {
      *
      * @var string
      */
-    public $iban;
-    /**
-     *
-     * @var string
-     */
-    public $bic_swift;
-    /**
-     *
-     * @var string
-     */
-    public $bank_name;
-    /**
-     *
-     * @var string
-     */
-    public $bank_address;
-    /**
-     *
-     * @var string
-     */
     public $part_type;
-    
     /**
      *
      * @var string
      */
     public $company;
-    
-    //<-- delete if fix in api
-    /**
-     *
-     * @var array
-     */
-    public $enum;
-    // -->
-    
     /**
      *
      * @var array
      */
     public $history;
-    
     /**
      *
      * @var array
      */
     public $documents;
-    
 }
