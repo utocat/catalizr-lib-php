@@ -10,8 +10,7 @@ namespace Catalizr\Lib;
 class Config {
    public $publicKey;
    public $privateKey;
-   public $url = "https://qualif.api.catalizr.io/v1";
-   
+   public $url = "https://preprod.api.catalizr.io/";
    public $folderCache = __DIR__. DIRECTORY_SEPARATOR ."..".DIRECTORY_SEPARATOR. "cache";
    public function __construct($config) {
         if(isset($config['privateKey']))

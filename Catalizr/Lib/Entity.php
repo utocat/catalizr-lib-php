@@ -13,24 +13,30 @@ namespace Catalizr\Lib;
  *
  * @author codati
  */
-class Entity implements \JsonSerializable{
+class Entity implements \JsonSerializable {
+
+    static $notAllowedProperties = [
+        'id',
+        'iid',
+    ];
+
     /**
      *
      * @var string
      */
     public $id;
-    
+
     /**
      *
      * @var string|int|double
      */
     public $iid;
-    
+
     public function __set ($name, $value){
         $className = get_class($this);
         throw new \Exception("$name in $className not exist");
     }
-    
+
     static public function hydrateAll($object) {
         $result = array();
         foreach ($object as  $value) {
@@ -39,21 +45,20 @@ class Entity implements \JsonSerializable{
         }
         return $result;
     }
-    
+
     public function __construct( $object=array()) {
         foreach ($object as $key => $value) {
-            
+
             $this->$key = $value;
         }
     }
     /**
-     * 
+     *
      * @return object
      */
     public function jsonSerialize() {
-      //  $array = (array) $this;
         $arrayResult = array();
-        
+
         foreach ($this as $key => $value) {
             if(isset($value))
             {

@@ -8,16 +8,27 @@ namespace Catalizr\Api;
  * @author codati
  */
 class Banks extends \Catalizr\Lib\Api{
-        
-    static $classEntity =  '\Catalizr\Entity\Banks';
-    static $prefixTag =  'banks';
+
     /**
-     * 
-     * @return \Catalizr\Entity\Banks[]
+     * @var string
      */
-    public function getAll() {
+    static $classEntity =  '\Catalizr\Entity\Banks';
+
+    /**
+     * @var string
+     */
+    static $prefixTag =  'banks';
+
+
+    /**
+     * TODO: maybe add pagination (need to be added in API too)
+     * @return \Catalizr\Entity\Banks[]
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function getAll()
+    {
        $objects = parent::getAll(self::$prefixTag);
        $className = self::$classEntity;
-        return $className::hydrateAll($objects);
+       return $className::hydrateAll($objects);
     }
 }

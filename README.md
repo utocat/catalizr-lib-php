@@ -1,7 +1,7 @@
 ![PHP Library for Catalizr API](./img/catalizr.png)
 CATALIZR LIBRARY
 =================================================
- This is a PHP client library to work with [Catalizr API](https://api.catalizr.io/doc/).
+ This is a PHP client library to work with [Catalizr API](https://doc.api.catalizr.io/).
 
 
 Requirements

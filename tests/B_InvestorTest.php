@@ -22,7 +22,7 @@ class B_InvestorTest extends TestMain{
 
 
     public function testCreateErrorApi() {
-        
+
         $investor = new Catalizr\Entity\Investors();
         try{
             $this->api->investors->create($investor);
@@ -33,7 +33,7 @@ class B_InvestorTest extends TestMain{
         }
         return $investor;
     }
-     
+
     public function testCreateFull() {
         $investor = new Catalizr\Entity\Investors();
 
@@ -46,18 +46,20 @@ class B_InvestorTest extends TestMain{
         $investor->city = 'Lille';
         $investor->country= 'France';
         $investor->title= 'Lib';
-        $investor->email= 'support+'.time().'@catalizr.eu';
+        $investor->phone= '+33674736274';
+        $investor->email= 'support'.time().'@catalizr.eu';
         $investor->iid= time();
         $this->api->investors->create($investor);
-        
+
         $this->assertInternalType('string', $investor->id);
         $this->assertInternalType('string', $investor->iid);
         self::$investor = $investor;
+
         return $investor;
     }
-    
+
     /**
-     * 
+     *
      * @depends testCreateErrorApi
      */
     public function testCreate() {
@@ -73,7 +75,7 @@ class B_InvestorTest extends TestMain{
         $investor->country= 'France';
         $investor->title= 'Lib';
         $this->api->investors->create($investor);
-        
+
         $this->assertInternalType('string', $investor->id);
         return $investor;
     }
@@ -95,7 +97,7 @@ class B_InvestorTest extends TestMain{
         }
     }
     /**
-     * 
+     *
      * @depends testCreateFull
      */
     public function testGet(\Catalizr\Entity\Investors $investor) {
@@ -104,7 +106,6 @@ class B_InvestorTest extends TestMain{
         // get by iid
         $investorGetIid = $this->api->investors->getByExternalId($investor->iid);
         $this->assertEquals(self::$investor,$investorGetIid);
-
 
         $this->assertSame(self::$investor->name, 'Test');
         $this->assertSame(self::$investor->surname, 'PHP');
@@ -116,13 +117,13 @@ class B_InvestorTest extends TestMain{
         $this->assertSame(self::$investor->country, 'France');
         $this->assertSame(self::$investor->title, 'Lib');
         $this->assertSame(self::$investor->email, $investor->email);
-        
+
         $this->assertInternalType('string',self::$investor->createdAt);
         $this->assertInternalType('string',self::$investor->updatedAt);
 
         $this->assertSame(self::$investor->id, $investor->id);
         $this->assertSame(self::$investor->iid, $investor->iid);
-       
+
         // get all ids
         $ids = $this->api->investors->getAllid();
 
@@ -131,9 +132,35 @@ class B_InvestorTest extends TestMain{
         // get id by iid
 
         $id = $this->api->investors->getIdByExternalIid($investor->iid);
-        
+
         $this->assertSame($id, $investor->id);
+
+        return self::$investor;
     }
 
-    
+    /**
+     * @test
+     * @depends testGet
+     * @param \Catalizr\Entity\Investors $investors
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function getByEmail(\Catalizr\Entity\Investors $investors)
+    {
+        $investorByEmail = $this->api->investors->getByEmail($investors->email);
+        $this->assertEquals($investors, $investorByEmail);
+    }
+
+    /**
+     * @test
+     * @depends testCreateFull
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function update()
+    {
+        self::$investor->name = 'Test UPDATED';
+        $this->api->investors->update(self::$investor);
+
+        self::$investor->name = 'Test';
+        $this->api->investors->update(self::$investor);
+    }
 }

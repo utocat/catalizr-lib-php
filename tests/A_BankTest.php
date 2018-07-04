@@ -14,7 +14,7 @@ require_once 'TestMain.php';
  * @group banck
  */
 class A_BankTest extends TestMain {
-    
+
     public function testGetAll() {
         $bancks = $this->api->banks->getAll();
         $this->assertContainsOnlyInstancesOf('\Catalizr\Entity\Banks', $bancks);

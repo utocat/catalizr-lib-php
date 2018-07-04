@@ -24,11 +24,11 @@ class C_CompaniesTest extends TestMain {
      * @var \Catalizr\Entity\Companies
      */
     static $companie;
-    
+
     public function testCreateErrorApi() {
         $company = new \Catalizr\Entity\Companies();
         try{
-            
+
             $this->api->companies->create($company);
 
         } catch (\Catalizr\Lib\HttpException $ex) {
@@ -57,9 +57,9 @@ class C_CompaniesTest extends TestMain {
         return $company;
 
     }
-    
+
     /**
-     * 
+     *
      * @depends testCreate
      */
     public function testCreateFull(\Catalizr\Entity\Companies $companyAfter, $createMany=true) {
@@ -93,11 +93,11 @@ class C_CompaniesTest extends TestMain {
             self::$companies[] = $this->testCreateFull($company,false);
             self::$companies[] = $this->testCreateFull(end( self::$companies),false);
             self::$companies[] = $this->testCreateFull(end( self::$companies),false);
-
+            self::$companies[] = $this->testCreateFull(end( self::$companies),false);
         }
         return $company;
     }
-    
+
     public function testGetError() {
         try {
             $this->api->companies->getById('rrrrrrrrrrrrrrrrrrrrrrrr');
@@ -116,7 +116,7 @@ class C_CompaniesTest extends TestMain {
         }
     }
      /**
-     * 
+     *
      * @depends testCreateFull
      */
     public function testGet(\Catalizr\Entity\Companies $company) {
@@ -128,47 +128,104 @@ class C_CompaniesTest extends TestMain {
         $companyGetIid = $this->api->companies->getByExternalId($company->iid);
         $this->assertEquals(self::$companie,$companyGetIid);
 
-        $this->assertSame(self::$companie->name, 'utocat');
-        $this->assertSame(self::$companie->legal_form, 'SAS');
-        $this->assertSame(self::$companie->phone, '0123456789');
+        $this->assertGetCompany(self::$companie);
 
-        $this->assertSame(self::$companie->address, 'Doge B, 4 Avenue des Saules');
-        $this->assertSame(self::$companie->zip, '59000');
-        $this->assertSame(self::$companie->city, 'Lille');
-        $this->assertSame(self::$companie->country, 'France');
-        $this->assertSame(self::$companie->in_progress, false);
-        $this->assertSame(self::$companie->email, 'support@catalizr.eu');
-
-        $this->assertSame(self::$companie->boss_title, 'Mr');
-        $this->assertSame(self::$companie->boss_name, 'bossName');
-        $this->assertSame(self::$companie->boss_surname, 'bossSurname');
-        $this->assertSame(self::$companie->boss_phone, '1234567890');
-        $this->assertSame(self::$companie->boss_status, 'PDG');
-        
-        $this->assertSame(self::$companie->bank_name, 'test');
-        $this->assertSame(self::$companie->bank_address, 'test');
-        $this->assertSame(self::$companie->iban, 'FR1420041010050500013M02606');
-        $this->assertSame(self::$companie->bic_swift, 'AGRIFRPP867');
-        $this->assertInternalType('string',self::$companie->createdAt);
-        $this->assertInternalType('string',self::$companie->updatedAt);
-
-        
         $this->assertSame(self::$companie->siren, $company->siren);
         $this->assertSame(self::$companie->id, $company->id);
         $this->assertSame(self::$companie->iid, $company->iid);
 
-        // get all ids
-        $ids = $this->api->companies->getAllid();
-
-        $this->assertContainsOnly('string', $ids->items);
-
         // get id by iid
-
         $id = $this->api->companies->getIdByExternalIid($company->iid);
-        
+
         $this->assertSame($id, $company->id);
-    
     }
-    
-    
+
+    /**
+     * @test
+     * @depends testCreateFull
+     * @param \Catalizr\Entity\Companies $company
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function getBySiren(\Catalizr\Entity\Companies $company) {
+        $companyBySiren = $this->api->companies->getBySiren($company->siren);
+        $this->assertGetCompany($companyBySiren);
+    }
+
+    /**
+     * @test
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function getAllIdsWithPagination() {
+        $pagination = new \Catalizr\Pagination(['page' => 1, 'per_page' => 3]);
+        $companies = $this->api->companies->getAllIds($pagination);
+        $this->assertSortedPagination($companies);
+        $this->assertAttributeCount(3, 'items', $companies);
+    }
+
+    /**
+     * @test
+     * @depends testCreateFull
+     * @param \Catalizr\Entity\Companies $company
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function searchByName(\Catalizr\Entity\Companies $company){
+        $searchResult = $this->api->companies->searchByName($company->name);
+        $this->assertInternalType('array', $searchResult);
+        $this->assertNotEmpty($searchResult);
+        $this->assertEquals('utocat', $searchResult[0]->name);
+        $this->assertEquals('59000', $searchResult[0]->zip);
+        $this->assertEquals('Lille', $searchResult[0]->city);
+    }
+
+    /**
+     * @test
+     * @depends testCreateFull
+     * @param \Catalizr\Entity\Companies $company
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function update(\Catalizr\Entity\Companies $company)
+    {
+        $originalCompany = $this->api->companies->getById($company->id);
+        $originalCompany->name = 'utocat 2';
+        $this->api->companies->update($originalCompany);
+        $updatedCompany = $this->api->companies->getById((string)$originalCompany->id);
+        $this->assertNotEmpty($updatedCompany->updatedAt);
+        $this->assertNotEquals($updatedCompany->updatedAt, $originalCompany->updatedAt);
+        unset($originalCompany->updatedAt);
+        unset($updatedCompany->updatedAt);
+        $this->assertEquals($updatedCompany, $originalCompany);
+
+        // reset Company
+        $originalCompany->name = 'utocat';
+        $this->api->companies->update($originalCompany);
+    }
+
+    /**
+     * @param \Catalizr\Entity\Companies $company
+     */
+    private function assertGetCompany(\Catalizr\Entity\Companies $company) {
+        $this->assertSame($company->name, 'utocat');
+        $this->assertSame($company->legal_form, 'SAS');
+        $this->assertSame($company->phone, '0123456789');
+        $this->assertSame($company->address, 'Doge B, 4 Avenue des Saules');
+        $this->assertSame($company->zip, '59000');
+        $this->assertSame($company->city, 'Lille');
+        $this->assertSame($company->country, 'France');
+        $this->assertSame($company->in_progress, false);
+        $this->assertSame($company->email, 'support@catalizr.eu');
+        $this->assertSame($company->boss_title, 'Mr');
+        $this->assertSame($company->boss_name, 'bossName');
+        $this->assertSame($company->boss_surname, 'bossSurname');
+        $this->assertSame($company->boss_phone, '1234567890');
+        $this->assertSame($company->boss_status, 'PDG');
+        $this->assertSame($company->bank_name, 'test');
+        $this->assertSame($company->bank_address, 'test');
+        $this->assertSame($company->iban, 'FR1420041010050500013M02606');
+        $this->assertSame($company->bic_swift, 'AGRIFRPP867');
+
+        $this->assertInternalType('string',$company->createdAt);
+        $this->assertInternalType('string',$company->updatedAt);
+
+        $this->assertNotEmpty($company->siren);
+    }
 }

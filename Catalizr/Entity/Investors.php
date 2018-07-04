@@ -2,80 +2,93 @@
 
 namespace Catalizr\Entity;
 
+use Catalizr\Lib\Traits\Timestampable;
+
 /**
  * Description of Investors
  *
  * @author codati
  */
-class Investors extends \Catalizr\Lib\Entity {
+class Investors extends \Catalizr\Lib\Entity
+{
+    use Timestampable;
+
     /**
-     *
-     * @var int
+     * @var array
      */
-    public $updatedAt;
+    static $notAllowedProperties = [
+        'createdAt',
+        'documents',
+        'updatedAt',
+    ];
+
     /**
-     *
-     * @var int
-     */
-    public $createdAt;
-    /**
-     *
-     * @var string
-     */
-    public $title;
-    /**
-     *
-     * @var string
-     */
-    public $name;
-    /**
-     *
-     * @var string
-     */
-    public $surname;
-    /**
-     *
-     * @var string
-     */
-    public $birth_date;
-    /**
-     *
-     * @var string
-     */
-    public $birth_city;
-    
-    /**
-     *
      * @var string
      */
     public $address;
+
     /**
-     *
      * @var string
      */
-    public $zip;
-    
+    public $bic_swift;
+
     /**
-     *
+     * @var string
+     */
+    public $birth_city;
+
+    /**
+     * @var string
+     */
+    public $birth_date;
+
+    /**
      * @var string
      */
     public $city;
-    
+
     /**
-     *
      * @var string
      */
     public $country;
-   
+
     /**
-     *
+     * @var array
+     */
+    public $documents;
+
+    /**
      * @var string
      */
     public $email;
-    
+
     /**
-     *
-     * @var array()
+     * @var string
      */
-    public $documents;
+    public $iban;
+
+    /**
+     * @var string
+     */
+    public $name;
+
+    /**
+     * @var string
+     */
+    public $phone;
+
+    /**
+     * @var string
+     */
+    public $surname;
+
+    /**
+     * @var string
+     */
+    public $title;
+
+    /**
+     * @var string
+     */
+    public $zip;
 }

@@ -1,3 +1,11 @@
+## 1.0.3 (2018-07-04)
+
+### Other (1 change)
+* Add all endpoint of the api
+
+### Fixed (1 change)
+* fix url encode and add phone in investor
+
 ## 1.0.2 (2018-05-24)
 ### Fixed (1 changes)
 * Patch all routes with best attributes
@@ -24,6 +32,7 @@
 
 ## 0.0.1 (2018-02-24)
 * First commit
+
 
 
 

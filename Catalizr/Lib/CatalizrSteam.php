@@ -34,13 +34,13 @@ class CatalizrSteam {
         {
             $ret= fread($this->file, $count);
         }else if(( $count + $this->position) > $this->dataLenght){// tombe a cheval entre les data et le fichier => concat
-            
+
             $ret = substr($this->data, $this->position) . fread($this->file, $count - ($this->dataLenght - $this->position));
-            
+
         }else{// tombe uniquement dans les data( le texte)
             $ret = substr($this->data, $this->position,$count);
         }
-        
+
         //$ret = "123456789";
         //var_dump($count);
 //        var_dump($this->position);
@@ -97,7 +97,7 @@ class CatalizrSteam {
 //        }
 //    }
 //
-//    function stream_metadata($path, $option, $var) 
+//    function stream_metadata($path, $option, $var)
 //    {
 //        if($option == STREAM_META_TOUCH) {
 //         $url = parse_url($path);
@@ -109,5 +109,5 @@ class CatalizrSteam {
 //        }
 //        return false;
 //    }
-    
+
    }
