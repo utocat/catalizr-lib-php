@@ -104,10 +104,10 @@ class Api extends Object
         if (filesize($document->path_to_file) < 2000000) {
             $objectToSend = $document->jsonSerialize();
             $objectToSend['base64'] = base64_encode(file_get_contents($document->path_to_file));
-            $object = $this->api->helperRequest->executeReq($prefixTag.'_postDocuments', $objectToSend,[$id]);
+            $object = $this->api->helperRequest->executeReq($prefixTag.'_postDocuments', $objectToSend, [$id]);
         } else {
-            $object = $this->api->helperRequest->executeReq($prefixTag.'_postDocuments', $document,[$id]);
-            $this->api->helperRequest->executeUpload($document->path_to_file, $object->url,$document->type_mime);
+            $object = $this->api->helperRequest->executeReq($prefixTag.'_postDocuments', $document, [$id]);
+            $this->api->helperRequest->executeUpload($document->path_to_file, $object->url, $document->type_mime);
         }
 
         $document->id = $object->id;

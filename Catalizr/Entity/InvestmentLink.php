@@ -22,6 +22,19 @@ class InvestmentLink extends \Catalizr\Lib\Entity
     ];
 
     /**
+     * The code of the bank related to the InvestmentLink.
+     * 
+     * @var string
+     */
+    public $bank_code;
+    /**
+     * The name of the bank related to the InvestmentLink.
+     *
+     * @var string
+     */
+    public $bank_name;
+
+    /**
      * @var array
      */
     public $documents;

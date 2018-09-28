@@ -129,6 +129,11 @@ class Investments extends \Catalizr\Lib\Entity
     public $investor_id;
 
     /**
+     * @var string
+     */
+    public $invest_link_id;
+
+    /**
      * @var float
      */
     public $nb_bons;
@@ -181,7 +186,14 @@ class Investments extends \Catalizr\Lib\Entity
         $arrayResult = array();
 
         foreach ($this as $key => $value) {
-            if (in_array($key, self::$notAllowedProperties)) {
+            /* TODO: remove the above "if" once API will have updated the route POST investment to use
+            parameters whith an other name than "investor" and "company" to generate the documents for investor and company
+            when an investment is created.
+            */
+            if (('investor' === $key || 'company' === $key) && is_bool($value)) {
+                $arrayResult[$key] = $value;
+                continue;
+            } elseif (in_array($key, self::$notAllowedProperties)) {
                 continue;
             }
             if (isset($value)) {

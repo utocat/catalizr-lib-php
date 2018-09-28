@@ -58,10 +58,12 @@ class Investments extends \Catalizr\Lib\Api
 
     /**
      * @param \Catalizr\Entity\Investments $investment investment for save
+     * @param bool $generateInvestorDocs Documents for investor will be generated if set to true.
+     * @param bool $generateCompanyDocs Documents for company will be generated if set to true.
      * @return Object
      * @throws \Catalizr\Lib\HttpException
      */
-    public function create(\Catalizr\Entity\Investments &$investment)
+    public function create(\Catalizr\Entity\Investments &$investment, $generateInvestorDocs = false, $generateCompanyDocs = false)
     {
         if(!isset($investment->fundraising_id))
         {
@@ -87,6 +89,14 @@ class Investments extends \Catalizr\Lib\Api
             }else{
                 throw new \Exception('investor or investor_id or investor_external_id is not set in investment');
             }
+        }
+
+        if ($generateInvestorDocs) {
+            $investment->investor = true;
+        }
+
+        if ($generateCompanyDocs) {
+            $investment->company = true;
         }
 
         return parent::create(self::$prefixTag, $investment);

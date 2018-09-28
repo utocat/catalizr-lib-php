@@ -61,8 +61,8 @@ class E_InvestmentsTest extends TestMain {
             $this->api->investments->create($investment2);
 
         } catch (\Catalizr\Lib\HttpException $ex) {
-          $this->assertSame(400, $ex->getCode(),'http code');
-          $this->assertSame('"payment_mode" is required', $ex->getMessage());
+            $this->assertSame(400, $ex->getCode(),'http code');
+            $this->assertSame('"payment_mode" is required', $ex->getMessage());
         }
     }
 
@@ -70,14 +70,22 @@ class E_InvestmentsTest extends TestMain {
     {
         $investment1 = new \Catalizr\Entity\Investments();
         $investment1->fundraising_external_id = D_FundraisingsTest::$fundraisingHaveIid->iid;
-        $investment1->investor = B_InvestorTest::$investor;
+        $investment1->investor_id = B_InvestorTest::$investor->id;
+        $investment1->investor = true;
         $investment1->payment_mode = 'PEA';
-        $investment1->nb_part = 10;
-        $investment1->bank_name ='MySuperBanck';
-        $investment1->category ='investment1Category';
+        $investment1->nb_part = 100;
+        $investment1->part_amount = 125;
+        $investment1->bank_name ='Crédit du Nord';
+        $investment1->bank_address = '58 Boulevard Carnot - 62000 Arras - FRANCE';
+        $investment1->iban = 'IE64BOFI9058381234567800000';
+        $investment1->bic_swift = 'BOFIIE2DETC';
+        $investment1->company = false;
+        $investment1->nb_bons = 10;
+        $investment1->category ='A';
 
         $return = $this->api->investments->create($investment1);
-        $this->assertContainsOnly('string', $return->documents_created);
+        $this->assertNotEmpty($return->documents_created);
+        $this->assertContainsOnly('object', $return->documents_created);
 
         foreach ($return->documents_required as $doc) {
             $this->assertInternalType('string',$doc->type);
@@ -89,6 +97,7 @@ class E_InvestmentsTest extends TestMain {
         $investment2->investor_external_id = B_InvestorTest::$investor->iid;
         $investment2->payment_mode = 'PEA';
         $investment2->nb_part = 10;
+        $investment2->part_amount = 125;
         $investment2->bank_name ='MySuperBanck';
         $investment2->category ='investment2Category';
 
@@ -99,6 +108,7 @@ class E_InvestmentsTest extends TestMain {
         $investment3->investor_id = B_InvestorTest::$investor->id;
         $investment3->payment_mode = 'PEA';
         $investment3->nb_part = 10;
+        $investment3->part_amount = 212;
         $investment3->bank_name ='MySuperBanck';
         $investment3->category ='investment3Category';
 
@@ -109,9 +119,10 @@ class E_InvestmentsTest extends TestMain {
     {
         $investment = new \Catalizr\Entity\Investments();
         $investment->fundraising = D_FundraisingsTest::$fundraisings[2];
-        $investment->investor = B_InvestorTest::$investor;
+        $investment->investor_id = B_InvestorTest::$investor->id;
         $investment->payment_mode = 'PEA';
         $investment->nb_part = 10;
+        $investment->part_amount = 122;
         $investment->bank_name ='MySuperBanck';
         $investment->bic_swift ='AGRIFRPP867';
         $investment->bank_address ='MyBankAddr';
@@ -156,6 +167,7 @@ class E_InvestmentsTest extends TestMain {
             'BANK_CONFIRMED',
             'EXPIRED',
             'REPORTED',
+            'CLOSED',
         ];
 
         $this->assertEquals($expectedStatus, $allStatus);
@@ -326,7 +338,7 @@ class E_InvestmentsTest extends TestMain {
     public function sendLink(\Catalizr\Entity\InvestmentLink $investmentLink)
     {
         $emailParams = [
-            "email" => "contact@utocat.com",
+            "emailInvestor" => "support@catalizr.eu",
             "mail_subject" => "Subject of the message",
             "mail_body" => "Explicit content of the message",
         ];
@@ -335,10 +347,10 @@ class E_InvestmentsTest extends TestMain {
 
         $this->assertObjectHasAttribute('id', $resultObject);
         $this->assertObjectHasAttribute('url', $resultObject);
-        $this->assertObjectHasAttribute('email', $resultObject);
+        $this->assertObjectHasAttribute('emailInvestor', $resultObject);
         $this->assertEquals($investmentLink->id, $resultObject->id);
         $this->assertNotEmpty($resultObject->url);
-        $this->assertEquals($emailParams['email'], $resultObject->email);
+        $this->assertEquals($emailParams['emailInvestor'], $resultObject->emailInvestor);
     }
 
     /**
@@ -351,7 +363,7 @@ class E_InvestmentsTest extends TestMain {
      */
     public function setLinkDocument(\Catalizr\Entity\InvestmentLink $investmentLink)
     {
-        $documentData = array_merge(TestData::$iconBase64, ["type" => "STATUS"]);
+        $documentData = array_merge(TestData::$pdfBase64, ["type" => "STATUTS"]);
 
         $resultObject = $this->api->investments->setLinkDocument($investmentLink, $documentData);
 

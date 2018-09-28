@@ -38,7 +38,7 @@ class C_CompaniesTest extends TestMain {
         return $company;
     }
 
-    public function testCreate($siren=null) {
+    public function testCreate() {
         $company = new \Catalizr\Entity\Companies();
 
         $company->name = 'utocat';
@@ -60,6 +60,43 @@ class C_CompaniesTest extends TestMain {
 
     /**
      *
+     * @test
+     *
+     * @return \Catalizr\Entity\Companies
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function createWithNoSiren() {
+        $company = new \Catalizr\Entity\Companies();
+
+        $company->name = 'Company with no SIREN';
+        $company->legal_form = 'SAS';
+        $company->phone = '0123456789';
+        $company->address = 'Doge B, 4 Avenue des Saules';
+        $company->zip = '59000';
+        $company->city = 'Lille';
+        $company->country = 'France';
+        $company->in_progress = true;
+        $company->email = 'support@catalizr.eu';
+        $company->iid = time();
+        $company->boss_title = 'Mr';
+        $company->boss_name = 'bossName';
+        $company->boss_surname = 'bossSurname';
+        $company->boss_phone ='1234567890';
+        $company->boss_status ='PDG';
+        $company->bank_name = 'test';
+        $company->bank_address = 'test';
+        $company->iban='FR1420041010050500013M02606';
+        $company->bic_swift='AGRIFRPP867';
+        $this->api->companies->create($company);
+
+        $this->assertInternalType('string', $company->id);
+        $this->assertInternalType('string', $company->iid);
+
+        return $company;
+    }
+
+    /**
+     *
      * @depends testCreate
      */
     public function testCreateFull(\Catalizr\Entity\Companies $companyAfter, $createMany=true) {
@@ -74,17 +111,17 @@ class C_CompaniesTest extends TestMain {
         $company->country = 'France';
         $company->in_progress = false;
         $company->siren = strval($companyAfter->siren +1);
-        $company->email= 'support@catalizr.eu';
-        $company->iid= isset($companyAfter->iid) ? $companyAfter->iid+1 : time();
-        $company->boss_title= 'Mr';
-        $company->boss_name= 'bossName';
-        $company->boss_surname= 'bossSurname';
-        $company->boss_phone='1234567890';
-        $company->boss_status='PDG';
+        $company->email = 'support@catalizr.eu';
+        $company->iid = 100000000000000 - microtime(true) * 1000;
+        $company->boss_title = 'Mr';
+        $company->boss_name = 'bossName';
+        $company->boss_surname = 'bossSurname';
+        $company->boss_phone = '1234567890';
+        $company->boss_status = 'PDG';
         $company->bank_name = 'test';
         $company->bank_address = 'test';
-        $company->iban='FR1420041010050500013M02606';
-        $company->bic_swift='AGRIFRPP867';
+        $company->iban = 'FR1420041010050500013M02606';
+        $company->bic_swift = 'AGRIFRPP867';
         $this->api->companies->create($company);
         $this->assertInternalType('string', $company->id);
         $this->assertInternalType('string', $company->iid);
@@ -168,8 +205,39 @@ class C_CompaniesTest extends TestMain {
      * @param \Catalizr\Entity\Companies $company
      * @throws \Catalizr\Lib\HttpException
      */
-    public function searchByName(\Catalizr\Entity\Companies $company){
+    public function searchByName(\Catalizr\Entity\Companies $company)
+    {
         $searchResult = $this->api->companies->searchByName($company->name);
+        $this->assertInternalType('array', $searchResult);
+        $this->assertNotEmpty($searchResult);
+        $this->assertEquals('utocat', $searchResult[0]->name);
+        $this->assertEquals('59000', $searchResult[0]->zip);
+        $this->assertEquals('Lille', $searchResult[0]->city);
+    }
+
+    /**
+     * @test
+     * @depends createWithNoSiren
+     * @param \Catalizr\Entity\Companies $company
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function searchByNameWithNoSiren(\Catalizr\Entity\Companies $company)
+    {
+        $searchResult = $this->api->companies->searchByName($company->name, false);
+        $this->assertInternalType('array', $searchResult);
+        $this->assertNotEmpty($searchResult);
+        $this->assertEquals('Company with no SIREN', $searchResult[0]->name);
+    }
+
+    /**
+     * @test
+     * @depends testCreateFull
+     * @param \Catalizr\Entity\Companies $company
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function searchBySiren(\Catalizr\Entity\Companies $company)
+    {
+        $searchResult = $this->api->companies->searchBySiren($company->siren);
         $this->assertInternalType('array', $searchResult);
         $this->assertNotEmpty($searchResult);
         $this->assertEquals('utocat', $searchResult[0]->name);
@@ -193,6 +261,8 @@ class C_CompaniesTest extends TestMain {
         $this->assertNotEquals($updatedCompany->updatedAt, $originalCompany->updatedAt);
         unset($originalCompany->updatedAt);
         unset($updatedCompany->updatedAt);
+        unset($originalCompany->modified);
+        unset($updatedCompany->modified);
         $this->assertEquals($updatedCompany, $originalCompany);
 
         // reset Company

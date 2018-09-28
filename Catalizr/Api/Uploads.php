@@ -51,9 +51,9 @@ class Uploads extends \Catalizr\Lib\Api
      * @return object
      * @throws \Catalizr\Lib\HttpException
      */
-    public function getDocumentUrl($documentId)
+    public function getDocumentUrl($document)
     {
-        return $this->api->helperRequest->executeReq(self::$prefixTag . '_documents_post', null, [$documentId]);
+        return $this->api->helperRequest->executeReq(self::$prefixTag . '_documents_post', null, [$document->id]);
     }
 
     /**

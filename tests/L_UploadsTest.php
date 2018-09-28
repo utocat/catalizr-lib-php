@@ -33,20 +33,6 @@ class L_UploadsTest extends TestMain
         return $uploadLink;
     }
 
-    /**
-     * @test
-     *
-     * @throws \Catalizr\Lib\HttpException
-     */
-    public function getDocumentUrl()
-    {
-        $result = $this->api->uploads->getDocumentUrl(F_DocumentTest::$document->id);
-
-        $this->assertObjectHasAttribute('id', $result);
-        $this->assertAttributeNotEmpty('id', $result);
-    }
-
-
     // Dependant tests
     /**
      * @test

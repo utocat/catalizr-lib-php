@@ -20,7 +20,8 @@ class Companies extends \Catalizr\Lib\Entity
         'createdAt',
         'updatedAt',
         'documents',
-        'fundraising_default'
+        'fundraising_default',
+        'update_request',
     ];
 
     /**
@@ -114,6 +115,11 @@ class Companies extends \Catalizr\Lib\Entity
     public $mobile_for_signature;
 
     /**
+     * @var bool
+     */
+    public $modified;
+
+    /**
      * @var string
      */
     public $name;
@@ -127,6 +133,13 @@ class Companies extends \Catalizr\Lib\Entity
      * @var string
      */
     public $siren;
+
+    /**
+     * Updates of the company requested by another entity (processed later by a service).
+     *
+     * @var object[]
+     */
+    public $update_request;
 
     /**
      * @var string

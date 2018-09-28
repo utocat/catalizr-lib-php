@@ -189,13 +189,27 @@ class Companies extends \Catalizr\Lib\Api
     }
 
     /**
-     * @param string $search
+     * @param string $search The name of the company to search for.
+     * @param bool $sirenAvailable If true the search is made on the companies that have a SIREN filled,
+     * otherwise the companies that are not fully filled (i.e. "in progress", with no SIREN number) may also be returned in result.
      * @return object[]
      * @throws \Catalizr\Lib\HttpException
      */
-    public function searchByName($search)
+    public function searchByName($search, $sirenAvailable = true)
     {
-        return $this->api->helperRequest->executeReq(self::$prefixTag . '_search', ['query' => $search]);
+        return $this->api->helperRequest->executeReq(self::$prefixTag . '_search', ['name' => $search, 'siren_available' => $sirenAvailable]);
+    }
+
+    /**
+     * Search for a company by its SIREN.
+     *
+     * @param string $siren The searched siren.
+     * @return object[] Array of object representing companies.
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function searchBySiren($siren)
+    {
+        return $this->api->helperRequest->executeReq(self::$prefixTag . '_search_siren', ['query' => $siren]);
     }
 
     /**

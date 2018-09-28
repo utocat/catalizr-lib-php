@@ -28,8 +28,8 @@ class B_InvestorTest extends TestMain{
             $this->api->investors->create($investor);
 
         } catch (\Catalizr\Lib\HttpException $ex) {
-          $this->assertSame(400, $ex->getCode(),'http code');
-          $this->assertSame('"name" is required', $ex->getMessage());
+            $this->assertSame(400, $ex->getCode(),'http code');
+            $this->assertSame('"name" is required', $ex->getMessage());
         }
         return $investor;
     }
@@ -45,7 +45,7 @@ class B_InvestorTest extends TestMain{
         $investor->zip = '59000';
         $investor->city = 'Lille';
         $investor->country= 'France';
-        $investor->title= 'Lib';
+        $investor->title= 'Mr';
         $investor->phone= '+33674736274';
         $investor->email= 'support'.time().'@catalizr.eu';
         $investor->iid= time();
@@ -73,7 +73,7 @@ class B_InvestorTest extends TestMain{
         $investor->zip = '59000';
         $investor->city = 'Lille';
         $investor->country= 'France';
-        $investor->title= 'Lib';
+        $investor->title= 'Mr';
         $this->api->investors->create($investor);
 
         $this->assertInternalType('string', $investor->id);
@@ -115,7 +115,7 @@ class B_InvestorTest extends TestMain{
         $this->assertSame(self::$investor->zip, '59000');
         $this->assertSame(self::$investor->city, 'Lille');
         $this->assertSame(self::$investor->country, 'France');
-        $this->assertSame(self::$investor->title, 'Lib');
+        $this->assertSame(self::$investor->title, 'Mr');
         $this->assertSame(self::$investor->email, $investor->email);
 
         $this->assertInternalType('string',self::$investor->createdAt);
@@ -157,10 +157,13 @@ class B_InvestorTest extends TestMain{
      */
     public function update()
     {
-        self::$investor->name = 'Test UPDATED';
-        $this->api->investors->update(self::$investor);
+        $investor = clone self::$investor;
+        unset($investor->email);
 
-        self::$investor->name = 'Test';
-        $this->api->investors->update(self::$investor);
+        $investor->name = 'Test UPDATED';
+        $this->api->investors->update($investor);
+
+        $investor->name = 'Test';
+        $this->api->investors->update($investor);
     }
 }

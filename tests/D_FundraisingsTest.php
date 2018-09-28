@@ -205,7 +205,7 @@ class D_FundraisingsTest extends TestMain {
         $company->city = 'Lille';
         $company->country = 'France';
         $company->in_progress = false;
-        $company->siren = strval(time() - 1000000000);
+        $company->siren = substr(strval(100000000000000 - microtime(true) * 1000), -9);
         $company->email= 'support@catalizr.eu';
         $company->iid= time();
         $company->boss_title= 'Mr';

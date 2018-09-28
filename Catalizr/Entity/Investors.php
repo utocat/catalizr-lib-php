@@ -68,6 +68,11 @@ class Investors extends \Catalizr\Lib\Entity
     public $iban;
 
     /**
+     * @var bool
+     */
+    public $modified;
+
+    /**
      * @var string
      */
     public $name;
