@@ -47,8 +47,8 @@ class B_InvestorTest extends TestMain{
         $investor->country= 'France';
         $investor->title= 'Mr';
         $investor->phone= '+33674736274';
-        $investor->email= 'support'.time().'@catalizr.eu';
-        $investor->iid= time();
+        $investor->email= 'support'.time().rand().'@catalizr.eu';
+        $investor->iid= time().rand();
         $this->api->investors->create($investor);
 
         $this->assertInternalType('string', $investor->id);
@@ -74,6 +74,7 @@ class B_InvestorTest extends TestMain{
         $investor->city = 'Lille';
         $investor->country= 'France';
         $investor->title= 'Mr';
+        $investor->email= 'support'.time().rand().'@catalizr.eu';
         $this->api->investors->create($investor);
 
         $this->assertInternalType('string', $investor->id);
@@ -93,7 +94,7 @@ class B_InvestorTest extends TestMain{
 
         } catch (\Catalizr\Lib\HttpException $ex) {
             $this->assertSame(404, $ex->getCode(),'http code');
-            $this->assertSame('Investor not found', $ex->getMessage());
+            $this->assertSame('Investor edfedfedfedfedfedfedfedf not found', $ex->getMessage());
         }
     }
     /**

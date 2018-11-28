@@ -74,7 +74,7 @@ class HelperRequest extends Object{
         'shares_links_get' => array('url' => '/shares/links/%s', 'method' => RequestType::GET, 'expectedCode' => array(200)),
         'shares_links_post' => array('url' => '/shares/links', 'method' => RequestType::POST, 'expectedCode' => array(200)),
         'shares_links_send_post' => array('url' => '/shares/links/%s/send', 'method' => RequestType::POST, 'expectedCode' => array(200)),
-        'signatures_links_envelope_post' => array('url' => '/signatures/links/%s/envelope', 'method' => RequestType::POST, 'expectedCode' => array(200)),
+        'signatures_links_envelope_post' => array('url' => '/signatures/links/%s/envelope', 'method' => RequestType::POST, 'expectedCode' => array(201)),
         'signatures_links_get' => array('url' => '/signatures/links/%s', 'method' => RequestType::GET, 'expectedCode' => array(200)),
         'signatures_links_post' => array('url' => '/signatures/links', 'method' => RequestType::POST, 'expectedCode' => array(201)),
         'signatures_links_send_post' => array('url' => '/signatures/links/%s/send', 'method' => RequestType::POST, 'expectedCode' => array(200)),

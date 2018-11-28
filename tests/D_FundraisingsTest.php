@@ -69,7 +69,7 @@ class D_FundraisingsTest extends TestMain {
             'funds_type' =>'CREATE',
             'part_nature' => 'PARTS_SOCIALES',
             'part_type' => 'ACTION_INVEST',
-            'iid'=> time()
+            'iid'=> time().rand()
         );
         $fundraising = new \Catalizr\Entity\Fundraisings($fundraisingData);
 
@@ -207,7 +207,7 @@ class D_FundraisingsTest extends TestMain {
         $company->in_progress = false;
         $company->siren = substr(strval(100000000000000 - microtime(true) * 1000), -9);
         $company->email= 'support@catalizr.eu';
-        $company->iid= time();
+        $company->iid= time().rand();
         $company->boss_title= 'Mr';
         $company->boss_name= 'bossName';
         $company->boss_surname= 'bossSurname';
@@ -231,7 +231,7 @@ class D_FundraisingsTest extends TestMain {
             'funds_type' =>'CREATE',
             'part_nature' => 'PARTS_SOCIALES',
             'part_type' => 'ACTION_INVEST',
-            'iid'=> time()
+            'iid'=> time().rand()
         );
         $fundraising = new \Catalizr\Entity\Fundraisings($fundraisingData);
 

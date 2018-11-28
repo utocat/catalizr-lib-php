@@ -26,7 +26,7 @@ class TestMain extends \PHPUnit\Framework\TestCase{
         $this->api = new Catalizr\Api();
         $this->api->config->privateKey = 'privateKey';
         $this->api->config->publicKey = 'aUniquePublicKey';
-        $this->api->config->url = 'https://dev.api.catalizr.io';
+        $this->api->config->url = getenv("TEST_URL");
         $this->api->config->folderCache = __DIR__.DIRECTORY_SEPARATOR.'cache';
     }
 

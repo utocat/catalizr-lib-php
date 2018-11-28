@@ -77,7 +77,7 @@ class C_CompaniesTest extends TestMain {
         $company->country = 'France';
         $company->in_progress = true;
         $company->email = 'support@catalizr.eu';
-        $company->iid = time();
+        $company->iid = time().rand();
         $company->boss_title = 'Mr';
         $company->boss_name = 'bossName';
         $company->boss_surname = 'bossSurname';

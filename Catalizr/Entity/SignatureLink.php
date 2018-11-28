@@ -30,20 +30,10 @@ class SignatureLink extends \Catalizr\Lib\Entity
     /**
      * @var string
      */
-    public $docuSign_id;
-
-    /**
-     * @var string
-     */
-    public $docuSign_url;
-
+    public $url_docusign;
+    
     /**
      * @var string
      */
     public $url;
-
-    /**
-     * @var object
-     */
-    public $user;
 }

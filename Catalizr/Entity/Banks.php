@@ -30,4 +30,22 @@ class Banks extends \Catalizr\Lib\Entity {
      * @var string
      */
     public $logo;
+    
+    // remove in the future version =>
+    /**
+     * @var array
+     */
+    public $authorized_domain_email_address;
+
+    /**
+     * @var string
+     */
+    public $subdomain;
+         
+    /**
+     * @var boolean
+     */   
+    public $permit_all_domain_email_address;
+    // <=
+    
 }

@@ -127,7 +127,7 @@ class E_InvestmentsTest extends TestMain {
         $investment->bic_swift ='AGRIFRPP867';
         $investment->bank_address ='MyBankAddr';
         $investment->iban ='FR1420041010050500013M02606';
-        $investment->iid =time();
+        $investment->iid = time().rand();
         $investment->category ='investmentCategory';
         $this->api->investments->create($investment);
 

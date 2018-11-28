@@ -23,11 +23,11 @@ class K_SignaturesTest extends TestMain
     {
         $investorInvestments = $this->api->investors->getAllInvestmentsIds(B_InvestorTest::$investor);
         self::$investment = $this->api->investments->getById(end($investorInvestments->items));
-
+        
         $data = [
             "documents" => [
                 [
-                    "id" => end(self::$investment->documents)->id,
+                    "id" => self::$investment->documents[0]->id,
                     "read_only" => true
                 ]
             ],
@@ -40,7 +40,6 @@ class K_SignaturesTest extends TestMain
         ];
 
         $link = $this->api->signatures->createLink($data);
-
         $this->assertObjectHasAttribute('id', $link);
         $this->assertObjectHasAttribute('url', $link);
         $this->assertAttributeNotEmpty('id', $link);
@@ -48,18 +47,33 @@ class K_SignaturesTest extends TestMain
 
         return new \Catalizr\Entity\SignatureLink($link);
     }
-
-    /**
+        /**
      * @test
      * @depends createLink
+     * @param \Catalizr\Entity\SignatureLink $signatureLink
+     * @throws \Catalizr\Lib\HttpException
+     */
+    public function createDocusignEnvelope(\Catalizr\Entity\SignatureLink $signatureLink)
+    {
+        $data= ["callback"=> "https://google.fr" ];
+        $response = $this->api->signatures->createDocusignEnvelope($signatureLink, $data);
+
+         $this->assertInternalType('string', $response->envelope_url);
+         $this->assertInternalType('string', $response->envelope_id);
+        return $signatureLink;
+    }
+    /**
+     * @test
+     * @depends createDocusignEnvelope
      * @param \Catalizr\Entity\SignatureLink $signatureLink
      * @throws \Catalizr\Lib\HttpException
      */
     public function getLink(\Catalizr\Entity\SignatureLink $signatureLink)
     {
         $link = $this->api->signatures->getLinkById($signatureLink->id);
+        $this->assertInternalType('string', $link->url_docusign);
 
-        $this->assertEquals(end(self::$investment->documents)->id, $link->documents[0]);
+        $this->assertEquals(self::$investment->documents[0]->id, $link->documents[0]);
     }
 
     /**

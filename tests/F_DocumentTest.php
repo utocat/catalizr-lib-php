@@ -39,7 +39,7 @@ class F_DocumentTest extends TestMain {
         }
         $document2->type = 'KBIS';
         $document2->type_mime = 'application/pdf';
-        $document2->path_to_file = __DIR__ .DIRECTORY_SEPARATOR .'test_upload' .DIRECTORY_SEPARATOR.'not_existe.png';
+        $document2->path_to_file = __DIR__ .DIRECTORY_SEPARATOR .'test_upload' .DIRECTORY_SEPARATOR.'not_found.png';
 
         try{
             $this->api->companies->createDocumentByExternalCompanyId(C_CompaniesTest::$companie->iid, $document2);
@@ -53,10 +53,10 @@ class F_DocumentTest extends TestMain {
         $document3->path_to_file = __DIR__ .DIRECTORY_SEPARATOR .'test_upload' .DIRECTORY_SEPARATOR.'pdf-test.pdf';
 
         try{
-            $this->api->companies->createDocumentByExternalCompanyId('not_existe', $document3);
+            $this->api->companies->createDocumentByExternalCompanyId('not_found', $document3);
         } catch (\Catalizr\Lib\HttpException $ex) {
             $this->assertSame(404, $ex->getCode(),'http code');
-            $this->assertSame('Company not found', $ex->getMessage());
+            $this->assertSame('Company not_found not found', $ex->getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ class F_DocumentTest extends TestMain {
         }
         $document2->type = 'PV_OUVERTURE_CAPITAL';
         $document2->type_mime = 'application/pdf';
-        $document2->path_to_file = __DIR__ .DIRECTORY_SEPARATOR .'test_upload' .DIRECTORY_SEPARATOR.'not_existe.png';
+        $document2->path_to_file = __DIR__ .DIRECTORY_SEPARATOR .'test_upload' .DIRECTORY_SEPARATOR.'not_found.png';
 
         try{
             $this->api->fundraisings->createDocumentByExternalFundraisingId(D_FundraisingsTest::$fundraisingHaveIid->iid, $document2);
@@ -109,10 +109,10 @@ class F_DocumentTest extends TestMain {
         $document3->path_to_file = __DIR__ .DIRECTORY_SEPARATOR .'test_upload' .DIRECTORY_SEPARATOR.'pdf-test.pdf';
 
         try{
-            $this->api->fundraisings ->createDocumentByExternalFundraisingId('not_existe', $document3);
+            $this->api->fundraisings ->createDocumentByExternalFundraisingId('not_found', $document3);
         } catch (\Catalizr\Lib\HttpException $ex) {
             $this->assertSame(404, $ex->getCode(),'http code');
-            $this->assertSame('Fundraising not found', $ex->getMessage());
+            $this->assertSame('Fundraising not_found not found', $ex->getMessage());
         }
     }
 
@@ -151,7 +151,7 @@ class F_DocumentTest extends TestMain {
         }
         $document2->type = 'BULLETIN_SOUSCRIPTION';
         $document2->type_mime = 'application/pdf';
-        $document2->path_to_file = __DIR__ .DIRECTORY_SEPARATOR .'test_upload' .DIRECTORY_SEPARATOR.'not_existe.png';
+        $document2->path_to_file = __DIR__ .DIRECTORY_SEPARATOR .'test_upload' .DIRECTORY_SEPARATOR.'not_found.png';
 
         try{
             $this->api->investments->createDocumentByExternalInvestmentId(E_InvestmentsTest::$investment->iid, $document2);
@@ -165,10 +165,10 @@ class F_DocumentTest extends TestMain {
         $document3->path_to_file = __DIR__ .DIRECTORY_SEPARATOR .'test_upload' .DIRECTORY_SEPARATOR.'pdf-test.pdf';
 
         try{
-            $this->api->investments->createDocumentByExternalInvestmentId('not_existe', $document3);
+            $this->api->investments->createDocumentByExternalInvestmentId('not_found', $document3);
         } catch (\Catalizr\Lib\HttpException $ex) {
             $this->assertSame(404, $ex->getCode(),'http code');
-            $this->assertSame('Investment not found', $ex->getMessage());
+            $this->assertSame('Investment not_found not found', $ex->getMessage());
         }
     }
 
