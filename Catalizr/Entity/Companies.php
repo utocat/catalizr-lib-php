@@ -24,6 +24,10 @@ class Companies extends \Catalizr\Lib\Entity
         'update_request',
     ];
 
+    static $hiddenProperties = [
+        'updatedAtDisplay',
+    ];
+
     /**
      * @var string
      */

@@ -20,6 +20,9 @@ class Entity implements \JsonSerializable {
         'iid',
     ];
 
+    static $hiddenProperties = [
+    ];
+
     /**
      *
      * @var string
@@ -34,7 +37,9 @@ class Entity implements \JsonSerializable {
 
     public function __set ($name, $value){
         $className = get_class($this);
-        throw new \Exception("$name in $className not exist");
+        if (!in_array($name, $className::$hiddenProperties)) {
+            throw new \Exception("$name in $className not exist");
+        }
     }
 
     static public function hydrateAll($object) {

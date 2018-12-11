@@ -42,6 +42,7 @@ class D_FundraisingsTest extends TestMain {
             'end_date' => date('c',time() + 70000),
             'amount_total' => 10000,
             'description'=> 'test lib php',
+            'funds_type' =>'CREATE',
         );
 
         self::$fundraisings[] = new \Catalizr\Entity\Fundraisings($fundraisingData);
@@ -111,7 +112,7 @@ class D_FundraisingsTest extends TestMain {
 
         } catch (\Catalizr\Lib\HttpException $ex) {
           $this->assertSame(404, $ex->getCode(),'http code');
-          $this->assertSame('Company not found', $ex->getMessage());
+          $this->assertSame('Company edfedfedfedfedfedfedfedf not found', $ex->getMessage());
         }
         $fundraising2 = new \Catalizr\Entity\Fundraisings();
 
@@ -137,7 +138,7 @@ class D_FundraisingsTest extends TestMain {
             $this->api->fundraisings->getById('edfedfedfedfedfedfedfedf');
         } catch (\Catalizr\Lib\HttpException $ex) {
             $this->assertSame(404, $ex->getCode(),'http code');
-            $this->assertSame('Fundraising not found', $ex->getMessage());
+            $this->assertSame('Fundraising edfedfedfedfedfedfedfedf not found', $ex->getMessage());
         }
     }
 

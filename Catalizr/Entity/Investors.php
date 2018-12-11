@@ -22,6 +22,10 @@ class Investors extends \Catalizr\Lib\Entity
         'updatedAt',
     ];
 
+    static $hiddenProperties = [
+        'updatedAtDisplay',
+    ];
+
     /**
      * @var string
      */

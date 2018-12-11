@@ -168,6 +168,12 @@ class E_InvestmentsTest extends TestMain {
             'EXPIRED',
             'REPORTED',
             'CLOSED',
+            'INVESTOR_SIGNED',
+            'COMPANY_SIGNED',
+            'ALL_SIGNED',
+            'PAYMENT_RECEIVED',
+            'INVESTMENT_UPDATED',
+            'INVESTMENT_CLOSED'
         ];
 
         $this->assertEquals($expectedStatus, $allStatus);
