@@ -55,7 +55,7 @@ class L_UploadsTest extends TestMain
      * @param \Catalizr\Entity\UploadLink $uploadLink
      * @throws \Catalizr\Lib\HttpException
      */
-    public function sendLink(\Catalizr\Entity\UploadLink $uploadLink)
+    /*public function sendLink(\Catalizr\Entity\UploadLink $uploadLink)
     {
         $emailData = [
             'emails' => [
@@ -74,5 +74,5 @@ class L_UploadsTest extends TestMain
         $this->assertEquals($uploadLink->url, $sent->url);
         $this->assertObjectHasAttribute('emails', $sent);
         $this->assertInternalType('array', $sent->emails);
-    }
+    }*/
 }

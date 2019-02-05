@@ -60,7 +60,7 @@ class J_SharesTest extends TestMain
      * @param object $shareLink
      * @throws \Catalizr\Lib\HttpException
      */
-    public function sendSharesLinkByEmail($shareLink)
+    /*public function sendSharesLinkByEmail($shareLink)
     {
         $data = [
             "emails" => ["email1@utocat.fr", "email2@utocat.fr"],
@@ -76,5 +76,5 @@ class J_SharesTest extends TestMain
         $this->assertEquals($shareLink->url, $sendSharelink->url);
         $this->assertObjectHasAttribute('emails', $sendSharelink);
         $this->assertInternalType('array', $sendSharelink->emails);
-    }
+    }*/
 }

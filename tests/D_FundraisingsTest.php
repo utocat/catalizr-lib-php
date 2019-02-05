@@ -43,6 +43,8 @@ class D_FundraisingsTest extends TestMain {
             'amount_total' => 10000,
             'description'=> 'test lib php',
             'funds_type' =>'CREATE',
+            'part_nature' => 'PARTS_SOCIALES',
+            'part_type' => 'ACTION_INVEST'
         );
 
         self::$fundraisings[] = new \Catalizr\Entity\Fundraisings($fundraisingData);
@@ -63,7 +65,7 @@ class D_FundraisingsTest extends TestMain {
             'part_amount' => 100.5,
             'minimum_investment'=> 1000,
             'fee' => 1,
-            'description'=> 'test lib php',
+            'description'=> 'test lib php full',
             'amount_total' => 10000,
             'start_date' => date('c',time() + 50000),
             'end_date' => date('c',time() + 70000),
@@ -158,7 +160,7 @@ class D_FundraisingsTest extends TestMain {
         $this->assertSame(self::$fundraisingHaveIid->minimum_investment, 1000);
         $this->assertSame(self::$fundraisingHaveIid->fee, 1);
         $this->assertSame(self::$fundraisingHaveIid->amount_total, 10000);
-        $this->assertSame(self::$fundraisingHaveIid->description, 'test lib php');
+        $this->assertSame(self::$fundraisingHaveIid->description, 'test lib php full');
         $this->assertSame(self::$fundraisingHaveIid->funds_type, 'CREATE');
         $this->assertSame(self::$fundraisingHaveIid->part_nature, 'PARTS_SOCIALES');
         $this->assertSame(self::$fundraisingHaveIid->part_type, 'ACTION_INVEST');
@@ -207,16 +209,16 @@ class D_FundraisingsTest extends TestMain {
         $company->country = 'France';
         $company->in_progress = false;
         $company->siren = substr(strval(100000000000000 - microtime(true) * 1000), -9);
-        $company->email= 'support@catalizr.eu';
+        $company->email= 'support'.time().rand().'@catalizr.eu';
         $company->iid= time().rand();
         $company->boss_title= 'Mr';
         $company->boss_name= 'bossName';
         $company->boss_surname= 'bossSurname';
         $company->boss_phone='1234567890';
         $company->boss_status='PDG';
-        $company->bank_name = 'test';
+        $company->bank_name = 'AXA';
         $company->bank_address = 'test';
-        $company->iban='FR1420041010050500013M02606';
+        $company->iban='FR'.time().rand();
         $company->bic_swift='AGRIFRPP867';
         $this->api->companies->create($company);
 

@@ -64,6 +64,11 @@ class Investments extends \Catalizr\Lib\Entity
     public $close_date;
 
     /**
+     * @var int
+     */
+    public $ownership_date;
+
+    /**
      * @var \Catalizr\Entity\Companies
      */
     public $company;
@@ -83,6 +88,11 @@ class Investments extends \Catalizr\Lib\Entity
      */
     public $documents;
 
+    /**
+     * @var array
+     */
+    public $signatures;
+    
     /**
      * @var \Catalizr\Entity\Fundraisings
      */
@@ -157,6 +167,11 @@ class Investments extends \Catalizr\Lib\Entity
      * @var string
      */
     public $part_type;
+
+    /**
+     * @var string
+     */
+    public $part_nature;
 
     /**
      * @var string

@@ -29,6 +29,12 @@ class Fundraisings extends \Catalizr\Lib\Entity {
         'amount_total',
     ];
 
+    static $hiddenProperties = [
+        'sql_id',
+        'entity',
+        'issuer_id',
+    ];
+
     /**
      * @var float
      */

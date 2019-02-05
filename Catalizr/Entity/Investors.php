@@ -24,6 +24,10 @@ class Investors extends \Catalizr\Lib\Entity
 
     static $hiddenProperties = [
         'updatedAtDisplay',
+        'sql_id',
+        'entity',
+        'ibans',
+        'name_surname',
     ];
 
     /**

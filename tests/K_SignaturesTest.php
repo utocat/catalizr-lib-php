@@ -82,7 +82,7 @@ class K_SignaturesTest extends TestMain
      * @param \Catalizr\Entity\SignatureLink $signatureLink
      * @throws \Catalizr\Lib\HttpException
      */
-    public function sendLink(\Catalizr\Entity\SignatureLink $signatureLink)
+    /*public function sendLink(\Catalizr\Entity\SignatureLink $signatureLink)
     {
         $emailsData = [
             'emails' => [
@@ -98,5 +98,5 @@ class K_SignaturesTest extends TestMain
         $this->assertEquals($emailsData['emails'], $result->emails);
         $this->assertEquals($signatureLink->id, $result->id);
         $this->assertEquals($signatureLink->url, $result->url);
-    }
+    }*/
 }

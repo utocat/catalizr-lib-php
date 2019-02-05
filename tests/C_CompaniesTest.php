@@ -76,16 +76,16 @@ class C_CompaniesTest extends TestMain {
         $company->city = 'Lille';
         $company->country = 'France';
         $company->in_progress = true;
-        $company->email = 'support@catalizr.eu';
         $company->iid = time().rand();
+        $company->email = $company->iid.'@catalizr.eu';
         $company->boss_title = 'Mr';
         $company->boss_name = 'bossName';
         $company->boss_surname = 'bossSurname';
         $company->boss_phone ='1234567890';
         $company->boss_status ='PDG';
-        $company->bank_name = 'test';
+        $company->bank_name = 'AXA';
         $company->bank_address = 'test';
-        $company->iban='FR1420041010050500013M02606';
+        $company->iban='FR'.$company->siren;
         $company->bic_swift='AGRIFRPP867';
         $this->api->companies->create($company);
 
@@ -111,16 +111,16 @@ class C_CompaniesTest extends TestMain {
         $company->country = 'France';
         $company->in_progress = false;
         $company->siren = strval($companyAfter->siren +1);
-        $company->email = 'support@catalizr.eu';
         $company->iid = 100000000000000 - microtime(true) * 1000;
+        $company->email = $company->iid.'@catalizr.eu';
         $company->boss_title = 'Mr';
         $company->boss_name = 'bossName';
         $company->boss_surname = 'bossSurname';
         $company->boss_phone = '1234567890';
         $company->boss_status = 'PDG';
-        $company->bank_name = 'test';
+        $company->bank_name = 'AXA';
         $company->bank_address = 'test';
-        $company->iban = 'FR1420041010050500013M02606';
+        $company->iban = 'FR'.$company->siren;
         $company->bic_swift = 'AGRIFRPP867';
         $this->api->companies->create($company);
         $this->assertInternalType('string', $company->id);
@@ -149,7 +149,7 @@ class C_CompaniesTest extends TestMain {
 
         } catch (\Catalizr\Lib\HttpException $ex) {
             $this->assertSame(404, $ex->getCode(),'http code');
-            $this->assertSame('Company not found', $ex->getMessage());
+            $this->assertSame('Company edfedfedfedfedfedfedfedf not found', $ex->getMessage());
         }
     }
      /**
@@ -282,15 +282,15 @@ class C_CompaniesTest extends TestMain {
         $this->assertSame($company->city, 'Lille');
         $this->assertSame($company->country, 'France');
         $this->assertSame($company->in_progress, false);
-        $this->assertSame($company->email, 'support@catalizr.eu');
+        $this->assertSame($company->email, $company->iid.'@catalizr.eu');
         $this->assertSame($company->boss_title, 'Mr');
         $this->assertSame($company->boss_name, 'bossName');
         $this->assertSame($company->boss_surname, 'bossSurname');
         $this->assertSame($company->boss_phone, '1234567890');
         $this->assertSame($company->boss_status, 'PDG');
-        $this->assertSame($company->bank_name, 'test');
-        $this->assertSame($company->bank_address, 'test');
-        $this->assertSame($company->iban, 'FR1420041010050500013M02606');
+        $this->assertSame($company->bank_name, 'AXA');
+        //$this->assertSame($company->bank_address, 'test');
+        $this->assertSame($company->iban, 'FR'.$company->siren);
         $this->assertSame($company->bic_swift, 'AGRIFRPP867');
 
         $this->assertInternalType('string',$company->createdAt);
