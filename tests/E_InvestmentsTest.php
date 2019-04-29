@@ -51,7 +51,7 @@ class E_InvestmentsTest extends TestMain {
         } catch (Exception $ex) {
             $this->assertSame(404, $ex->getCode(),'http code');
 
-            $this->assertSame('Fundraising not found', $ex->getMessage());
+            $this->assertSame('Fundraising '.$investment1->fundraising_id .' not found', $ex->getMessage());
         }
         $investment2 = new \Catalizr\Entity\Investments();
         $investment2->fundraising_external_id = D_FundraisingsTest::$fundraisingHaveIid->iid;
@@ -171,6 +171,7 @@ class E_InvestmentsTest extends TestMain {
             'INVESTOR_SIGNED',
             'COMPANY_SIGNED',
             'ALL_SIGNED',
+            'PAYMENT_EMITTED',
             'PAYMENT_RECEIVED',
             'INVESTMENT_UPDATED',
             'INVESTMENT_CLOSED'

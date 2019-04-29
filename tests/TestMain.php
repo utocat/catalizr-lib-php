@@ -24,8 +24,8 @@ class TestMain extends \PHPUnit\Framework\TestCase{
         @unlink(__DIR__.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.'jwt.txt');
         @rmdir(__DIR__.DIRECTORY_SEPARATOR.'cache');
         $this->api = new Catalizr\Api();
-        $this->api->config->privateKey = 'privateKey';
-        $this->api->config->publicKey = 'aUniquePublicKey';
+        $this->api->config->privateKey =  getenv("TEST_PRIVATE_KEY");
+        $this->api->config->publicKey = getenv("TEST_PUBLIC_KEY");
         $this->api->config->url = getenv("TEST_URL");
         $this->api->config->folderCache = __DIR__.DIRECTORY_SEPARATOR.'cache';
     }

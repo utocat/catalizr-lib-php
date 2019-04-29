@@ -37,11 +37,26 @@ class Investments extends \Catalizr\Lib\Entity
         'fundraising_external_id',
     ];
 
+    static $hiddenProperties = [
+        'investment_link',
+        'sql_id',
+        'custom1',
+        'advisor',
+    ];
+    /**
+     * @var DateTime
+     */
+    public $emitted_payment_date;
 
     /**
      * @var string
      */
     public $bank_address;
+
+    /**
+     * @var string
+     */
+    public $operation_type;
 
     /**
      * @var string
@@ -92,7 +107,7 @@ class Investments extends \Catalizr\Lib\Entity
      * @var array
      */
     public $signatures;
-    
+
     /**
      * @var \Catalizr\Entity\Fundraisings
      */

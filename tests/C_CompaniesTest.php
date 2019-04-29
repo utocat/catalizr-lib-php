@@ -48,7 +48,12 @@ class C_CompaniesTest extends TestMain {
         $company->zip = '59000';
         $company->city = 'Lille';
         $company->country = 'France';
+        $company->bank_name = 'AXA';
+        $company->bank_address = 'test';
         $company->in_progress = false;
+         $company->iban='FR'.time().rand();
+        $company->bic_swift='AGRIFRPP867';
+        $company->email = time().rand().'@catalizr.eu';
         $company->siren = strval(time() - 1000000000);
 
         $this->api->companies->create($company);
